@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
 
 {%block opengraph%}
-<meta property="og:description" content="{{ video_url.split('/')[-1]}}">
-<meta property="og:video" content="{{ video_url }}">
-<meta property="og:type" content="video.other">
-<meta property="og:video:type" content="video/webm">
-<meta property="og:video:width" content="1280">
-<meta property="og:video:height" content="720">
+{%block description%} {{ video_url.split('/')[-1]}} {%endblock%}
+  <meta property="og:video" content="{{ video_url }}">
+  <meta property="og:type" content="video.other">
+  <meta property="og:video:type" content="video/webm">
+  <meta property="og:video:width" content="1280">
+  <meta property="og:video:height" content="720">
 {%endblock%}
 
-{%block title%}
-Retard video!
-{%endblock%}
+{%block title%} {{video_url.split('/')[-1]}} {%endblock%}
 
 {%block scripts%}
 <script>
