@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   async function reloadVideo() {
-    const res = await fetch('/new'); // or /api/getvideo
+    const res = await fetch('/new');
     const data = await res.json();
     videoUrl = data.video;
 
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateVideoInfo(url) {
-    const name = url.split('/').pop().split('.')[0];
+    const name = url.split('/').pop();
     videoName.textContent = name;
   }
 

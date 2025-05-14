@@ -2,7 +2,7 @@
 
 {%block opengraph%}
   <meta property="og:description" content="{{ video_url }}">
-  <meta property="og:url" content="{{ request.url_root }}force?v={{ cache_buster }}">
+  <meta property="og:url" content="{{ request.url_root }}">
   <meta property="og:video" content="{{ video_url }}">
   <meta property="og:type" content="video.other">
   <meta property="og:video:type" content="video/webm">
@@ -32,7 +32,13 @@
   <video id="vid" controls playsinline></video>
 
   <div class="video-info" id="videoInfo">
-    Video: <span id="videoName"></span> &nbsp;|&nbsp; Tap to copy link
+    Join discord
+  </div>
+  <div class="video-info" id="videoInfo">
+    <a style="color:#ffffff" href="https://discordapp.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
+    &nbsp;|&nbsp;
+    Video: <span id="videoName"></span>
+    &nbsp;|&nbsp; Tap to copy link
   </div>
 <script src="/static/script.js"></script>
 {%endblock%}
