@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{%block opengraph%}
+<meta property="og:video:type" content="video/webm">
+<meta property="og:video:width" content="1280">
+<meta property="og:video:height" content="720">
+{%endblock%}
+
+{%block title%}
+Retard video!
+{%endblock%}
+
+{%block scripts%}
+  <script src="/static/script.js"></script>
+{% endblock %}
+
+{%block style%}
+<link href="/static/style.css" rel="stylesheet" type="text/css" media="all">
+{%endblock%}
+
+{%block body%}
+  <div id="clickCatcher"></div>
+
+  <div id="initialImage">
+    <img src="https://csgoani.me/resources/unmute.webp" alt="Click to unmute and start">
+  </div>
+
+  <video id="vid" controls playsinline></video>
+
+  <div class="video-info" id="videoInfo">
+    Video: <span id="videoName"></span> &nbsp;|&nbsp; Tap to copy link
+  </div>
+{%endblock%}
