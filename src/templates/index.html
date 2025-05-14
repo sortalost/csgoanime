@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {%block opengraph%}
-{%block description%} {{ video_url.split('/')[-1]}} {%endblock%}
+{%block ogtitle%} {{video_url.split('/')[-1]}} {%endblock%}
+{%block description%} {{ video_url }} {%endblock%}
   <meta property="og:video" content="{{ video_url }}">
   <meta property="og:type" content="video.other">
   <meta property="og:video:type" content="video/webm">
