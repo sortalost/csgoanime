@@ -11,7 +11,9 @@ Retard video!
 {%endblock%}
 
 {%block scripts%}
-  <script src="/static/script.js"></script>
+<script>
+  window.initialVideoUrl = "{{ video_url }}";
+</script>
 {% endblock %}
 
 {%block style%}
@@ -30,4 +32,5 @@ Retard video!
   <div class="video-info" id="videoInfo">
     Video: <span id="videoName"></span> &nbsp;|&nbsp; Tap to copy link
   </div>
+<script src="/static/script.js"></script>
 {%endblock%}
