@@ -4,7 +4,7 @@ from flask import Flask
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-@app.route("/csgo")
+@app.route("/")
 def csgoanime():
     url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
     return render_template("index.html", video_url=url)
