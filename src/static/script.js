@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const name = videoUrl.split('/').pop().split('.')[0];
     history.replaceState(null, "", "/" + name);
-    document.title = "CSGO Ani.me - " + name;
+    document.title = "CSGOANIME | " + name;
 
     vid.play();
     updateVideoInfo(videoUrl);
