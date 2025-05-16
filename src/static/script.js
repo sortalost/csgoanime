@@ -97,7 +97,7 @@ function addToHistory(url) {
     e.stopPropagation();
     playFromHistory(url);
   });
-  mobileHistoryBar.appendChild(mobileItem);
+  mobileHistoryBar.prepend(mobileItem);
 }
 
 
