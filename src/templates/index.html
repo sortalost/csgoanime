@@ -25,31 +25,25 @@
 
 {%block body%}
   <div id="clickCatcher"></div>
-  
-  <div id="videoWrapper">
-    <div id="initialImage">
-      <img src="https://csgoani.me/resources/unmute.webp" alt="Click to unmute and start">
-    </div>
-    <video id="vid" controls playsinline></video>
+
+  <div id="initialImage">
+    <img src="https://csgoani.me/resources/unmute.webp" alt="Click to unmute and start">
   </div>
 
+  <video id="vid" controls playsinline></video>
 
-  <div id="extraInfo">
-    <div class="video-history">
-      <div id="videoHistoryTitle">history (0)</div>
-      <div id="videoHistory"></div>
-    </div>
-
-    <div class="video-info" id="videoInfo">
-      [SPACEBAR] to pause/play
-      &nbsp;|&nbsp;
-      <a style="color:#ffffff" href="https://discordapp.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
-      &nbsp;|&nbsp;
-      Video: <span id="videoName"></span>
-      &nbsp;|&nbsp; Tap to copy link
-    </div>
+  <div class="video-history">
+    <div id="videoHistoryTitle">history (0)</div>
+    <div id="videoHistory"></div>
   </div>
 
-
+  <div class="video-info" id="videoInfo">
+    [SPACEBAR] to pause/play
+    &nbsp;|&nbsp;
+    <a style="color:#ffffff" href="https://discordapp.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
+    &nbsp;|&nbsp;
+    Video: <span id="videoName"></span>
+    &nbsp;|&nbsp; Tap to copy link
+  </div>
 <script src="/static/script.js"></script>
 {%endblock%}
