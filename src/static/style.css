@@ -84,15 +84,9 @@
       background-color: rgba(255, 255, 255, 0.3);
     }
     @media (max-width: 768px) {
+      .video-info,
       .video-history {
         display: none !important;
-      }
-    }
-
-    /* Hide on desktop */
-    @media (min-width: 769px) {
-      .mobile-history-bar {
-        display: none;
       }
     }
 
@@ -119,5 +113,28 @@
         transition: background 0.2s;
         margin-right: 12px;
         cursor: pointer;
+      }
+      
+      .mobile-info-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(19, 19, 19, 0.75);
+        padding: 8px 12px;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 14px;
+        color: white;
+        z-index: 100;
+        border-radius: 8px;
+      }
+    }
+
+     /* Hide on desktop */
+    @media (min-width: 769px) {
+      .mobile-info-bar,
+      .mobile-history-bar {
+        display: none;
       }
     }
