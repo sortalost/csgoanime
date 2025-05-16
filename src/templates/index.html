@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {%block opengraph%}
-  <meta property="og:description" content="{{ video_url }}">
-  <meta property="og:url" content="{{ request.url_root }}">
+  <meta property="og:title" content="{{ video_name }} | CSGOANI.ME">
+  <meta property="og:description" content="csgoani.me but better">
+  <meta property="og:url" content="{{ request.url }}">
   <meta property="og:video" content="{{ video_url }}">
   <meta property="og:type" content="video.other">
   <meta property="og:video:type" content="video/webm">

@@ -1,19 +1,28 @@
 import time
 import requests
-from flask import Flask, jsonify, render_template, make_response
+from flask import Flask, jsonify, render_template, url_for, redirect
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-@app.route("/")
-def csgoanime():
-    url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
-    resp = make_response(render_template("index.html", video_url=url))
-    resp.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    resp.headers['Pragma'] = 'no-cache'
-    resp.headers['Expires'] = '0'
-    return resp
-    # return render_template("index.html", video_url=url)
+
+@app.route('/')
+def _root():
+    video_url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
+    video_name = video_url.split('/')[-1]
+    return redirect(url_for('serve_video', videoname=video_name))
+
+@app.route('/<videoname>')
+def serve_video(videoname):
+    video_url = f"https://csgoani.me/vids/{videoname}"
+    return render_template("index.html", video_url=video_url, video_name=videoname.split('.')[0])
+
+@app.errorhandler(404)
+def norfound(e):
+    video_url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
+    video_name = video_url.split('/')[-1]
+    return redirect(url_for('serve_video', videoname=video_name))
 
 @app.route("/new")
 def get_video():
