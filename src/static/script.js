@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
       e.stopPropagation();
       playFromHistory(url);
     });
+    document.getElementById('videoHistoryTitle').textContent = `history (${videoHistory.length})`;
     videoHistoryContainer.prepend(item);
   }
 
