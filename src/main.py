@@ -10,18 +10,18 @@ app.url_map.strict_slashes = False
 @app.route('/')
 def _root():
     video_url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
-    video_name = video_url.split('/')[-1]
+    video_name = video_url.split('/')[-1].split('.')[0]
     return redirect(url_for('serve_video', videoname=video_name))
 
 @app.route('/<videoname>')
 def serve_video(videoname):
-    video_url = f"https://csgoani.me/vids/{videoname}"
-    return render_template("index.html", video_url=video_url, video_name=videoname.split('.')[0])
+    video_url = f"https://csgoani.me/vids/{videoname}.webm"
+    return render_template("index.html", video_url=video_url, video_name=videoname)
 
 @app.errorhandler(404)
 def norfound(e):
     video_url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
-    video_name = video_url.split('/')[-1]
+    video_name = video_url.split('/')[-1].split('.')[0]
     return redirect(url_for('serve_video', videoname=video_name))
 
 @app.route("/new")
