@@ -55,3 +55,44 @@
         background: rgba(0,0,0,0.7);
       }
     }
+    .video-history {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      max-height: 80vh;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .video-history div {
+      padding: 4px 6px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .video-history div:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .video-history {
+        top: auto;
+        bottom: 10px;
+        left: 10px;
+        right: auto;
+        width: fit-content;
+        max-height: 40vh;
+        font-size: 12px;
+      }
+    }

@@ -4,9 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const videoInfo = document.getElementById('videoInfo');
   const videoName = document.getElementById('videoName');
   const clickCatcher = document.getElementById('clickCatcher');
+  const videoHistoryContainer = document.getElementById('videoHistory');
   
   let videoUrl = window.initialVideoUrl;
   let unmutedOnce = localStorage.getItem('videoUnmuted') === 'true';
+  let videoHistory = [];
+
 
   updateVideoInfo(videoUrl);
   videoInfo.style.display = 'block';
@@ -57,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.title = "CSGOANIME | " + name;
     vid.play();
     updateVideoInfo(videoUrl);
+    addToHistory(videoUrl);
   }
 
   function updateVideoInfo(url) {
@@ -72,6 +76,38 @@ document.addEventListener("DOMContentLoaded", function () {
     document.execCommand("copy");
     document.body.removeChild(textarea);
   }
+  function addToHistory(url) {
+    if (videoHistory.includes(url)) return;
+
+    videoHistory.push(url);
+    const name = url.split('/').pop();
+
+    const item = document.createElement('div');
+    item.textContent = name;
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      playFromHistory(url);
+    });
+
+    videoHistoryContainer.appendChild(item);
+  }
+
+  function playFromHistory(url) {
+    videoUrl = url;
+
+    vid.pause();
+    vid.removeAttribute('src');
+    vid.load();
+    vid.src = videoUrl;
+
+    const name = videoUrl.split('/').pop().split('.')[0];
+    history.replaceState(null, "", "/" + name);
+    document.title = "CSGO Ani.me - " + name;
+
+    vid.play();
+    updateVideoInfo(videoUrl);
+  }
+
 
   window.addEventListener('keydown', function(e) {
     if (e.code === 'Space') {
