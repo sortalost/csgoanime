@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
   updateVideoInfo(videoUrl);
   videoInfo.style.display = 'block';
   vid.src = videoUrl;
-
+  vid.onerror = () => {
+    console.log("Video failed to load. Fetching new one...");
+    reloadVideo();
+  };
   if (unmutedOnce) {
     initialImage.style.display = 'none';
     vid.style.display = 'block';
@@ -49,8 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
     vid.removeAttribute('src');
     vid.load();
     vid.src = videoUrl;
+    const name = videoUrl.split('/').pop().split('.')[0];
+    history.replaceState(null, "", "/" + name);
     vid.play();
-
     updateVideoInfo(videoUrl);
   }
 
