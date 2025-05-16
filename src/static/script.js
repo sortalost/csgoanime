@@ -76,21 +76,30 @@ document.addEventListener("DOMContentLoaded", function () {
     document.execCommand("copy");
     document.body.removeChild(textarea);
   }
-  function addToHistory(url) {
-    if (videoHistory.includes(url)) return;
+function addToHistory(url) {
+  if (videoHistory.includes(url)) return;
 
-    videoHistory.push(url);
-    const name = url.split('/').pop();
+  videoHistory.push(url);
+  const name = url.split('/').pop();
 
-    const item = document.createElement('div');
-    item.textContent = name;
-    item.addEventListener('click', (e) => {
-      e.stopPropagation();
-      playFromHistory(url);
-    });
-    document.getElementById('videoHistoryTitle').textContent = `history (${videoHistory.length})`;
-    videoHistoryContainer.prepend(item);
-  }
+  const item = document.createElement('div');
+  item.textContent = name;
+  item.addEventListener('click', (e) => {
+    e.stopPropagation();
+    playFromHistory(url);
+  });
+  document.getElementById('videoHistoryTitle').textContent = `history (${videoHistory.length})`;
+  videoHistoryContainer.prepend(item);
+  const mobileHistoryBar = document.getElementById('mobileHistoryBar');
+  const mobileItem = document.createElement('span');
+  mobileItem.textContent = name;
+  mobileItem.addEventListener('click', (e) => {
+    e.stopPropagation();
+    playFromHistory(url);
+  });
+  mobileHistoryBar.appendChild(mobileItem);
+}
+
 
   function playFromHistory(url) {
     videoUrl = url;
