@@ -26,8 +26,10 @@ def norfound(e):
 
 @app.route("/new")
 def get_video():
-    video_url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
-    return jsonify({"video": video_url})
+    resp = requests.get("https://csgoani.me/api/getnewvideo").json()
+    video_url = resp['video']
+    total = resp['num_videos']
+    return jsonify({"video": video_url,"total":total})
 
 if __name__=="__main__":
     app.run()
