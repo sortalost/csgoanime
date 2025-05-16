@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     vid.src = videoUrl;
     const name = videoUrl.split('/').pop().split('.')[0];
     history.replaceState(null, "", "/" + name);
+    document.title = "CSGOANIME | " + name;
     vid.play();
     updateVideoInfo(videoUrl);
   }

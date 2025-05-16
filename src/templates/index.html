@@ -11,7 +11,7 @@
   <meta property="og:video:height" content="720">
 {%endblock%}
 
-{%block title%} {{video_url.split('/')[-1]}} {%endblock%}
+{%block title%} {{video_url.split('/')[-1].split('.')[0]}} {%endblock%}
 
 {%block scripts%}
 <script>
