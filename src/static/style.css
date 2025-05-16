@@ -89,18 +89,6 @@
       }
     }
 
-    /* Mobile adjustments */
-    @media (max-width: 768px) {
-      .video-history {
-        top: auto;
-        bottom: 10px;
-        left: 10px;
-        right: auto;
-        width: fit-content;
-        max-height: 40vh;
-        font-size: 12px;
-      }
-    }
     /* Hide on desktop */
     @media (min-width: 769px) {
       .mobile-history-bar {
@@ -125,7 +113,10 @@
       }
 
       .mobile-history-bar span {
-        display: inline-block;
+        padding: 4px 6px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        transition: background 0.2s;
         margin-right: 12px;
         cursor: pointer;
         text-decoration: underline;
