@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const initialImage = document.getElementById('initialImage');
   const videoInfo = document.getElementById('videoInfo');
   const videoName = document.getElementById('videoName');
+  const videoNameMobile = document.getElementById('videoNameMobile');
   const clickCatcher = document.getElementById('clickCatcher');
   const videoHistoryContainer = document.getElementById('videoHistory');
   
@@ -66,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateVideoInfo(url) {
     const name = url.split('/').pop();
     videoName.textContent = name;
+    videoNameMobile.textContent = name;
   }
 
   function copyVideoUrl() {
