@@ -88,8 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
       e.stopPropagation();
       playFromHistory(url);
     });
-
-    videoHistoryContainer.appendChild(item);
+    videoHistoryContainer.prepend(item);
   }
 
   function playFromHistory(url) {
