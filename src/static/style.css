@@ -96,3 +96,33 @@
         font-size: 12px;
       }
     }
+    /* Hide on desktop */
+    @media (min-width: 769px) {
+      .mobile-history-bar {
+        display: none;
+      }
+    }
+
+    /* Show on mobile */
+    @media (max-width: 768px) {
+      .mobile-history-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.75);
+        padding: 8px 12px;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 14px;
+        color: white;
+        z-index: 100;
+      }
+
+      .mobile-history-bar span {
+        display: inline-block;
+        margin-right: 12px;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
