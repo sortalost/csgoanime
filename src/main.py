@@ -16,7 +16,7 @@ def _root():
 @app.route('/<videoname>')
 def serve_video(videoname):
     video_url = f"https://csgoani.me/vids/{videoname}.webm"
-    return render_template("index.html", video_url=video_url, video_name=videoname)
+    return render_template("index.html", video_url=video_url, video_name=videoname,total=total)
 
 @app.errorhandler(404)
 def norfound(e):
