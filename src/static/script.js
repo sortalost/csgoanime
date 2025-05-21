@@ -51,15 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const res = await fetch('/new');
     const data = await res.json();
     videoUrl = data.video;
-
+    total = data.total
     vid.pause();
     vid.removeAttribute('src');
     vid.load();
     vid.src = videoUrl;
     const name = videoUrl.split('/').pop().split('.')[0];
     history.replaceState(null, "", "/" + name);
-    document.title = "CSGOANIME | " + name;
+    // document.title = "CSGOANIME | " + name;
     vid.play();
+    document.title = `${total} webms | ${name}`
     updateVideoInfo(videoUrl);
     addToHistory(videoUrl);
   }
