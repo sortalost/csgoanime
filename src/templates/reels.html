@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{%block title%}Reel{%endblock%}
+
+{%block scripts%}
+  <link rel="stylesheet" href="{{ url_for('static', filename='reels.css') }}">
+{%endblock%}
+
+{%block body%}
+  <div id="reelWrapper"></div>
+
+  <script>
+    const wrapper = document.getElementById('reelWrapper');
+    let loading = false;
+
+    async function getNewVideo() {
+      const res = await fetch('/new');
+      const data = await res.json();
+      return data.video;
+    }
+
+    async function addVideo() {
+      if (loading) return;
+      loading = true;
+
+      const url = await getNewVideo();
+      const container = document.createElement('div');
+      container.className = 'reel';
+
+      const video = document.createElement('video');
+      video.src = url;
+      video.autoplay = true;
+      video.muted = true;
+      video.controls = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.className = 'reel-video';
+
+      container.appendChild(video);
+      wrapper.appendChild(container);
+      loading = false;
+    }
+    for (let i = 0; i < 5; i++) addVideo();
+    window.addEventListener('scroll', () => {
+      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+      if (nearBottom) addVideo();
+    });
+  </script>
+{%endblock%}

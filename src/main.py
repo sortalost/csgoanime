@@ -31,5 +31,11 @@ def get_video():
     total = resp['num_videos']
     return jsonify({"video": video_url,"total":total})
 
+@app.route("/reels")
+def reels():
+    initial_video = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
+    return render_template("reels.html", video_url=initial_video)
+
+
 if __name__=="__main__":
     app.run()
