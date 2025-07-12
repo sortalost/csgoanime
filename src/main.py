@@ -9,7 +9,9 @@ app.url_map.strict_slashes = False
 
 @app.route('/')
 def _root():
-    video_url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
+    video_url = requests.get("https://csgoani.me/api/getnewvideo")
+    print(video_url)
+    video_url = video_url.json()['video']
     video_name = video_url.split('/')[-1].split('.')[0]
     return redirect(url_for('serve_video', videoname=video_name))
 

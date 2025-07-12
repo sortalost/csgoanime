@@ -2,4 +2,4 @@
 maybe something
 
 
-[csgoani.me](https://csgoani.me)'s copy, but less heavy, and simple
+[csgoani.me](https://csgoani.me)'s copy, but less heavy, and simple; and better
