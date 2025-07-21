@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSGOANIME</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/static//favicon.ico">
+  <link href="/static/style.css" rel="stylesheet" type="text/css" media="all">
+  <script>
+    async function fetchInitialVideo() {
+      const res = await fetch("https://csgoani.me/api/getnewvideo");
+      const data = await res.json();
+      window.initialVideoUrl = data.video;
+      window.total = data.num_videos || '?';
+    }
+    fetchInitialVideo().then(() => {
+      const script = document.createElement('script');
+      script.src = 'script.js';
+      document.body.appendChild(script);
+    });
+  </script>
+</head>
+
+<body>
+  <div id="clickCatcher"></div>
+
+  <div id="initialImage">
+    <img src="https://csgoani.me/resources/unmute.webp" alt="Click to unmute and start">
+  </div>
+
+  <video id="vid" controls playsinline></video>
+
+  <div class="video-history">
+    <div id="videoHistoryTitle">history (0)</div>
+    <div id="videoHistory"></div>
+  </div>
+  
+  <div class="mobile-info-bar">
+    Video: <span id="videoNameMobile"></span>
+    &nbsp;|&nbsp;
+    <a style="color:#ffffff" href="https://discordapp.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
+     &nbsp;|&nbsp;
+    <a style="color:#eeeeee" href="https://github.com/sortalost/csgoanime" target="_blank">GitHub</a>
+  </div>
+  <div class="mobile-history-bar" id="mobileHistoryBar"></div>
+
+  <div class="video-info" id="videoInfo">
+    [SPACEBAR] to pause/play
+    &nbsp;|&nbsp;
+    <a style="color:#ffffff" href="https://discord.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
+    &nbsp;|&nbsp;
+    <a style="color:#ffffff" target="_blank" href="#">See Comments</a>
+    &nbsp;|&nbsp;
+    Video: <span id="videoName"></span>
+    &nbsp;|&nbsp; Tap to copy link
+  </div>
+</body>
+</html>

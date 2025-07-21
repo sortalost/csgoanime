@@ -7,6 +7,11 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
+@app.route("/t")
+def test():
+    return render_template("t.html")
+
+
 @app.route('/')
 def _root():
     video_url = requests.get("https://csgoani.me/api/getnewvideo")
