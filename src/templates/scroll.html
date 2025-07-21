@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>reels</title>
+  <title>reeels</title>
   <style>
     html, body {
       margin: 0;
@@ -38,6 +38,34 @@
       max-height: 100%;
       max-width: 100%;
     }
+
+    #shareButton {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 999;
+      background: #fff;
+      color: #000;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
@@ -47,14 +75,11 @@
     </div>
     <div class="reel" id="reel1" style="transform: translateY(100%);"></div>
   </div>
-  
-  <button id="shareButton" style="position:fixed;top:10px;left:10px;z-index:999;background:#fff;color:#000;padding:8px 12px;border:none;border-radius:6px;cursor:pointer;">
-  🔗
-  </button>
 
+  <button id="shareButton">🔗 Share</button>
+  <div id="toast">Link Copied!</div>
 
   <script>
-    const container = document.getElementById('reelContainer');
     const reel0 = document.getElementById('reel0');
     const reel1 = document.getElementById('reel1');
 
@@ -64,7 +89,7 @@
     async function loadNewVideo(reel) {
       const res = await fetch('/new');
       const data = await res.json();
-      reel.innerHTML = `<video src="${data.video}" loop controls autoplay muted playsinline></video>`;
+      reel.innerHTML = `<video src="${data.video}" autoplay muted playsinline></video>`;
     }
 
     function swapReels() {
@@ -94,50 +119,52 @@
     document.addEventListener('touchstart', handleTouchStart, false);
     document.addEventListener('touchmove', handleTouchMove, false);
 
-    let xDown = null;
     let yDown = null;
 
     function handleTouchStart(evt) {
       const firstTouch = evt.touches[0];
-      xDown = firstTouch.clientX;
       yDown = firstTouch.clientY;
     }
 
     function handleTouchMove(evt) {
-      if (!xDown || !yDown) {
-        return;
-      }
+      if (!yDown) return;
 
-      const xUp = evt.touches[0].clientX;
       const yUp = evt.touches[0].clientY;
-
       const yDiff = yDown - yUp;
 
-      if (yDiff > 50) {
-        if (!isTransitioning) {
-          isTransitioning = true;
-          swapReels();
-        }
+      if (yDiff > 50 && !isTransitioning) {
+        isTransitioning = true;
+        swapReels();
       }
 
-      xDown = null;
       yDown = null;
     }
 
     loadNewVideo(reel1);
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.style.opacity = 1;
+      setTimeout(() => {
+        toast.style.opacity = 0;
+      }, 1500);
+    }
+
     document.getElementById("shareButton").addEventListener("click", async () => {
-      const videoUrl = document.getElementById('vid').src;
-      const videoName = videoUrl.split('/').pop().split('.')[0];
+      const currentReel = document.querySelector('.reel:nth-child(' + (current + 1) + ')');
+      const video = currentReel.querySelector('video');
+      if (!video) return;
+
+      const videoName = video.src.split('/').pop().split('.')[0];
       const shareUrl = `https://csgoanime.vercel.app/s/${videoName}`;
 
       try {
         await navigator.clipboard.writeText(shareUrl);
-        alert("Copied to clipboard:\n" + shareUrl);
+        showToast();
       } catch (err) {
         prompt("Copy manually:", shareUrl);
       }
     });
-
   </script>
 </body>
 </html>
