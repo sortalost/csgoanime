@@ -14,7 +14,7 @@ def test():
 
 @app.route('/')
 def _root():
-    video_url = requests.get("https://csgoani.me/api/getnewvideo")
+    video_url = requests.get("https://api.allorigins.win/get?url=https://csgoani.me/api/getnewvideo")
     print(video_url.content.decode('utf-8'))
     video_url = video_url.json()['video']
     video_name = video_url.split('/')[-1].split('.')[0]
@@ -27,13 +27,13 @@ def serve_video(videoname):
 
 @app.errorhandler(404)
 def norfound(e):
-    video_url = requests.get("https://csgoani.me/api/getnewvideo").json()['video']
+    video_url = requests.get("https://api.allorigins.win/get?url=https://csgoani.me/api/getnewvideo").json()['video']
     video_name = video_url.split('/')[-1].split('.')[0]
     return redirect(url_for('serve_video', videoname=video_name))
 
 @app.route("/new")
 def get_video():
-    resp = requests.get("https://csgoani.me/api/getnewvideo").json()
+    resp = requests.get("https://api.allorigins.win/get?url=https://csgoani.me/api/getnewvideo").json()
     video_url = resp['video']
     total = resp['num_videos']
     return jsonify({"video": video_url,"total":total})
