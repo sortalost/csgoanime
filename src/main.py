@@ -18,10 +18,10 @@ def getvid():
 #     video_name = video_url.split('/')[-1].split('.')[0]
 #     return redirect(url_for('serve_video', videoname=video_name))
 
-@app.route('/<videoname>')
-def serve_video(videoname):
-    video_url = f"https://csgoani.me/vids/{videoname}.webm"
-    return render_template("scroll.html", video_url=video_url, video_name=videoname)
+# @app.route('/<videoname>')
+# def serve_video(videoname):
+#     video_url = f"https://csgoani.me/vids/{videoname}.webm"
+#     return render_template("index.html", video_url=video_url, video_name=videoname)
 
 @app.errorhandler(404)
 def notfound(e):
