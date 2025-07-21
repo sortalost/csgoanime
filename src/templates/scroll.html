@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>reeels</title>
+  <title>CSGOANI.ME Reels</title>
   <style>
     html, body {
       margin: 0;
@@ -13,14 +13,12 @@
       font-family: Arial, sans-serif;
       height: 100%;
     }
-
     .reel-container {
       height: 100%;
       width: 100%;
       overflow: hidden;
       position: relative;
     }
-
     .reel {
       height: 100%;
       width: 100%;
@@ -33,12 +31,10 @@
       background: black;
       transition: transform 0.5s ease;
     }
-
     video {
       max-height: 100%;
       max-width: 100%;
     }
-
     #shareButton {
       position: fixed;
       top: 10px;
@@ -51,7 +47,6 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     #toast {
       position: fixed;
       bottom: 20px;
@@ -82,14 +77,13 @@
   <script>
     const reel0 = document.getElementById('reel0');
     const reel1 = document.getElementById('reel1');
-
     let current = 0;
     let isTransitioning = false;
 
     async function loadNewVideo(reel) {
       const res = await fetch('/new');
       const data = await res.json();
-      reel.innerHTML = `<video src="${data.video}" autoplay muted playsinline></video>`;
+      reel.innerHTML = `<video src="${data.video}" loop controls autoplay muted playsinline></video>`;
     }
 
     function swapReels() {
@@ -120,23 +114,17 @@
     document.addEventListener('touchmove', handleTouchMove, false);
 
     let yDown = null;
-
     function handleTouchStart(evt) {
-      const firstTouch = evt.touches[0];
-      yDown = firstTouch.clientY;
+      yDown = evt.touches[0].clientY;
     }
-
     function handleTouchMove(evt) {
       if (!yDown) return;
-
       const yUp = evt.touches[0].clientY;
       const yDiff = yDown - yUp;
-
       if (yDiff > 50 && !isTransitioning) {
         isTransitioning = true;
         swapReels();
       }
-
       yDown = null;
     }
 
@@ -154,14 +142,12 @@
       const currentReel = document.querySelector('.reel:nth-child(' + (current + 1) + ')');
       const video = currentReel.querySelector('video');
       if (!video) return;
-
       const videoName = video.src.split('/').pop().split('.')[0];
       const shareUrl = `https://csgoanime.vercel.app/s/${videoName}`;
-
       try {
         await navigator.clipboard.writeText(shareUrl);
         showToast();
-      } catch (err) {
+      } catch {
         prompt("Copy manually:", shareUrl);
       }
     });
