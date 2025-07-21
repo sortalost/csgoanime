@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CSGOANIME</title>
-  <link rel="shortcut icon" type="image/x-icon" href="/static//favicon.ico">
-  <link href="/static/style.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+  <link rel="stylesheet" href="/static/style.css" />
   <script>
     async function fetchInitialVideo() {
-      const res = await fetch("https://csgoani.me/api/getnewvideo");
-      const data = await res.json();
+      const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://csgoani.me/api/getnewvideo'));
+      const dataWrapped = await res.json();
+      const data = JSON.parse(dataWrapped.contents);
       window.initialVideoUrl = data.video;
       window.total = data.num_videos || '?';
     }
@@ -38,18 +39,19 @@
   <div class="mobile-info-bar">
     Video: <span id="videoNameMobile"></span>
     &nbsp;|&nbsp;
-    <a style="color:#ffffff" href="https://discordapp.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
+    <a href="https://discordapp.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
      &nbsp;|&nbsp;
-    <a style="color:#eeeeee" href="https://github.com/sortalost/csgoanime" target="_blank">GitHub</a>
+    <a href="https://github.com/sortalost/csgoanime" target="_blank">GitHub</a>
   </div>
+
   <div class="mobile-history-bar" id="mobileHistoryBar"></div>
 
   <div class="video-info" id="videoInfo">
     [SPACEBAR] to pause/play
     &nbsp;|&nbsp;
-    <a style="color:#ffffff" href="https://discord.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
+    <a href="https://discordapp.com/invite/MPwFdEQ" target="_blank">Join Discord</a>
     &nbsp;|&nbsp;
-    <a style="color:#ffffff" target="_blank" href="#">See Comments</a>
+    <a href="#" target="_blank">See Comments</a>
     &nbsp;|&nbsp;
     Video: <span id="videoName"></span>
     &nbsp;|&nbsp; Tap to copy link
