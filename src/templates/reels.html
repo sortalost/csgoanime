@@ -1,54 +1,79 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reels</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    
+    .reel-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+    }
 
-{%block title%}Reel{%endblock%}
+    .reel {
+      scroll-snap-align: start;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: black;
+      position: relative;
+    }
 
-{%block scripts%}
-  <link rel="stylesheet" href="{{ url_for('static', filename='reels.css') }}">
-{%endblock%}
+    video {
+      max-height: 100%;
+      max-width: 100%;
+    }
 
-{%block body%}
-  <div id="reelWrapper"></div>
+    .loading {
+      color: white;
+      position: absolute;
+      bottom: 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="reel-container" id="reelContainer">
+    <div class="reel" data-loaded="true">
+      <video src="{{ video_url }}" controls autoplay muted loop></video>
+    </div>
+  </div>
 
-<script>
-  const wrapper = document.getElementById('reelWrapper');
-  let loading = false;
+  <script>
+    const container = document.getElementById('reelContainer');
 
-  async function getNewVideo() {
-    const res = await fetch('/new');
-    const data = await res.json();
-    return data.video;
-  }
-
-  async function addVideo() {
-    if (loading) return;
-    loading = true;
-
-    const url = await getNewVideo();
-    const container = document.createElement('div');
-    container.className = 'reel';
-
-    const video = document.createElement('video');
-    video.src = url;
-    video.autoplay = true;
-    video.muted = true;
-    video.controls = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.className = 'reel-video';
-
-    container.appendChild(video);
-    wrapper.appendChild(container);
-    loading = false;
-  }
-
-  // Initial load
-  for (let i = 0; i < 5; i++) addVideo();
-
-  // Load more on scroll
-  window.addEventListener('scroll', () => {
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
-    if (nearBottom) addVideo();
-  });
-</script>
-
-{%endblock%}
+    container.addEventListener('scroll', async () => {
+      const lastReel = container.lastElementChild;
+      if (lastReel.getBoundingClientRect().top < window.innerHeight) {
+        if (lastReel.dataset.loaded === 'true') {
+          lastReel.dataset.loaded = 'loading';
+          const res = await fetch('/new');
+          const data = await res.json();
+          const reel = document.createElement('div');
+          reel.className = 'reel';
+          reel.dataset.loaded = 'true';
+          const video = document.createElement('video');
+          video.src = data.video;
+          video.autoplay = true;
+          video.muted = true;
+          video.controls = true;
+          video.loop = true;
+          reel.appendChild(video);
+          container.appendChild(reel);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
