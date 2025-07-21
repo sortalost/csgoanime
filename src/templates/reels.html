@@ -8,72 +8,118 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       background: black;
       overflow: hidden;
       font-family: Arial, sans-serif;
+      height: 100%;
     }
-    
+
     .reel-container {
-      height: 100vh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
     }
 
     .reel {
-      scroll-snap-align: start;
-      height: 100vh;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       background: black;
-      position: relative;
+      transition: transform 0.5s ease;
     }
 
     video {
       max-height: 100%;
       max-width: 100%;
     }
-
-    .loading {
-      color: white;
-      position: absolute;
-      bottom: 20px;
-      font-size: 16px;
-    }
   </style>
 </head>
 <body>
   <div class="reel-container" id="reelContainer">
-    <div class="reel" data-loaded="true">
-      <video src="{{ video_url }}" controls autoplay muted loop></video>
+    <div class="reel" id="reel0">
+      <video src="{{ video_url }}" autoplay muted playsinline></video>
     </div>
+    <div class="reel" id="reel1" style="transform: translateY(100%);"></div>
   </div>
 
   <script>
     const container = document.getElementById('reelContainer');
+    const reel0 = document.getElementById('reel0');
+    const reel1 = document.getElementById('reel1');
 
-    container.addEventListener('scroll', async () => {
-      const lastReel = container.lastElementChild;
-      if (lastReel.getBoundingClientRect().top < window.innerHeight) {
-        if (lastReel.dataset.loaded === 'true') {
-          lastReel.dataset.loaded = 'loading';
-          const res = await fetch('/new');
-          const data = await res.json();
-          const reel = document.createElement('div');
-          reel.className = 'reel';
-          reel.dataset.loaded = 'true';
-          const video = document.createElement('video');
-          video.src = data.video;
-          video.autoplay = true;
-          video.muted = true;
-          video.controls = true;
-          video.loop = true;
-          reel.appendChild(video);
-          container.appendChild(reel);
-        }
+    let current = 0;
+    let isTransitioning = false;
+
+    async function loadNewVideo(reel) {
+      const res = await fetch('/new');
+      const data = await res.json();
+      reel.innerHTML = `<video src="${data.video}" autoplay muted playsinline></video>`;
+    }
+
+    function swapReels() {
+      const next = current === 0 ? 1 : 0;
+      const currentReel = document.getElementById(`reel${current}`);
+      const nextReel = document.getElementById(`reel${next}`);
+
+      nextReel.style.transform = 'translateY(0%)';
+      currentReel.style.transform = 'translateY(-100%)';
+
+      setTimeout(() => {
+        currentReel.style.transform = 'translateY(100%)';
+        loadNewVideo(currentReel);
+        current = next;
+        isTransitioning = false;
+      }, 500);
+    }
+
+    document.addEventListener('wheel', (e) => {
+      if (isTransitioning) return;
+      if (e.deltaY > 50) {
+        isTransitioning = true;
+        swapReels();
       }
     });
+
+    document.addEventListener('touchstart', handleTouchStart, false);
+    document.addEventListener('touchmove', handleTouchMove, false);
+
+    let xDown = null;
+    let yDown = null;
+
+    function handleTouchStart(evt) {
+      const firstTouch = evt.touches[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+    }
+
+    function handleTouchMove(evt) {
+      if (!xDown || !yDown) {
+        return;
+      }
+
+      const xUp = evt.touches[0].clientX;
+      const yUp = evt.touches[0].clientY;
+
+      const yDiff = yDown - yUp;
+
+      if (yDiff > 50) {
+        if (!isTransitioning) {
+          isTransitioning = true;
+          swapReels();
+        }
+      }
+
+      xDown = null;
+      yDown = null;
+    }
+
+    loadNewVideo(reel1);
   </script>
 </body>
 </html>
