@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 def getvid():
-    resp = requests.get("https://api.allorigins.win/get?url=https://csgoani.me/api/getnewvideo", timeout=5)
+    resp = requests.get("https://whateverorigin.org/get?url=https://csgoani.me/api/getnewvideo", headers={'Origin': 'https://random.com'}, timeout=5)
     print(resp.content.decode('utf-8'))
     wrapped = resp.json()
     return json.loads(wrapped['contents'])
