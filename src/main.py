@@ -7,6 +7,7 @@ app.url_map.strict_slashes = False
 
 def getvid():
     resp = requests.get("https://api.allorigins.win/get?url=https://csgoani.me/api/getnewvideo", timeout=5)
+    print(resp.content.decode('utf-8'))
     wrapped = resp.json()
     return json.loads(wrapped['contents'])
 
