@@ -59,7 +59,7 @@
     async function loadNewVideo(reel) {
       const res = await fetch('/new');
       const data = await res.json();
-      reel.innerHTML = `<video src="${data.video}" autoplay muted playsinline></video>`;
+      reel.innerHTML = `<video src="${data.video}" loop controls autoplay muted playsinline></video>`;
     }
 
     function swapReels() {
